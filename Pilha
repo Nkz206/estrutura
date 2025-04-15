@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+
+class ProgramaGestaoDocumentos
+{
+    static void Main()
+    {
+        Stack<string> pilhaDocumentos = new Stack<string>();
+        int opcao;
+
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("=== Sistema de Gestão de Documentos ===");
+            Console.WriteLine("1. Adicionar novo documento");
+            Console.WriteLine("2. Remover último documento enviado (revisado)");
+            Console.WriteLine("3. Exibir documento que será revisado");
+            Console.WriteLine("4. Listar todos os documentos pendentes");
+            Console.WriteLine("5. Mostrar quantidade total de documentos pendentes");
+            Console.WriteLine("6. Sair");
+            Console.Write("Escolha uma opção: ");
+
+            if (!int.TryParse(Console.ReadLine(), out opcao))
+            {
+                Console.WriteLine("Opção inválida! Pressione Enter para continuar.");
+                Console.ReadKey();
+                continue;
+            }
+
+            Console.Clear();
+
+            switch (opcao)
+            {
+                case 1:
+                    Console.Write("Digite o nome do documento: ");
+                    string nomeDoc = Console.ReadLine();
+                    pilhaDocumentos.Push(nomeDoc);
+                    Console.WriteLine("Documento adicionado com sucesso!");
+                    break;
+
+                case 2:
+                    if (pilhaDocumentos.Count > 0)
+                    {
+                        string docRemovido = pilhaDocumentos.Pop();
+                        Console.WriteLine($"Documento '{docRemovido}' foi removido (revisado).");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Não há documentos para remover.");
+                    }
+                    break;
+
+                case 3:
+                    if (pilhaDocumentos.Count > 0)
+                    {
+                        Console.WriteLine($"Documento no topo da pilha (próximo a ser revisado): {pilhaDocumentos.Peek()}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Não há documentos pendentes.");
+                    }
+                    break;
+
+                case 4:
+                    if (pilhaDocumentos.Count > 0)
+                    {
+                        Console.WriteLine("Documentos pendentes (do último ao primeiro):");
+                        foreach (var doc in pilhaDocumentos)
+                        {
+                            Console.WriteLine("- " + doc);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nenhum documento pendente.");
+                    }
+                    break;
+
+                case 5:
+                    Console.WriteLine($"Total de documentos pendentes: {pilhaDocumentos.Count}");
+                    break;
+
+                case 6:
+                    Console.WriteLine("Encerrando o sistema...");
+                    break;
+
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    break;
+            }
+
+            if (opcao != 6)
+            {
+                Console.WriteLine("\nPressione Enter para continuar...");
+                Console.ReadKey();
+            }
+
+        } while (opcao != 6);
+    }
+}
